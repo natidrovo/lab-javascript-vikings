@@ -22,13 +22,13 @@ class Soldier {
     receiveDamage (damage){
       this.health-= damage;
       if (this.health>0) {
-        return `${this.name} has received ${this.damage} points of damage`
+        return `${this.name} has received ${damage} points of damage`
       } else {
         return `${this.name} has died in act of combat`
       }
     }
     battleCry (){
-      return `Odin Owns You All`
+      return `Odin Owns You All!`
     }
   }
   
@@ -44,9 +44,9 @@ class Soldier {
     receiveDamage (damage) {
       this.health-=damage;
       if (this.health>0)  {
-        `A Saxon has received ${this.damage} points of damage`
+        return `A Saxon has received ${damage} points of damage`
       } else {
-        `A Saxon has died in combat`
+        return `A Saxon has died in combat`
            }
       
     }
@@ -66,10 +66,31 @@ class War {
             this.saxonArmy.push(saxon)
     }
     vikingAttack() {
-        Saxon.receiveDamage(Viking.strength){
-
+        const randomViking= this.vikingArmy[Math.floor(Math.random(this.vikingArmy))*this.vikingArmy.length];
+        const randomSaxon= this.saxonArmy[Math.floor(Math.random(this.saxonArmy))*this.saxonArmy.length];
+        const attack= randomSaxon.receiveDamage(randomViking.strength);
+        if (randomSaxon.health<=0){
+          this.saxonArmy.splice(randomSaxon,1)
         }
+        return attack
     }
-    saxonAttack()
-    showStatus()
+    saxonAttack(){
+      const randomViking= this.vikingArmy[Math.floor(Math.random(this.vikingArmy))*this.vikingArmy.length];
+      const randomSaxon= this.saxonArmy[Math.floor(Math.random(this.saxonArmy))*this.saxonArmy.length];
+      const attack= randomViking.receiveDamage(randomSaxon.strength);
+      if (randomViking.health<=0){
+        this.vikingArmy.splice(randomViking,1)
+      }
+      return attack
+    }
+    showStatus(){
+      if (this.saxonArmy.length===0){
+        return `Vikings have won the war of the century!`
+      } else if (this.vikingArmy.length===0) {
+        return `Saxons have fought for their lives and survived another day...`
+      } else {
+        return `Vikings and Saxons are still in the thick of battle.`
+      }
+    }
+
 }
